@@ -30,5 +30,40 @@ jobs:
       - name: Request Deployment
         uses: actions/github-script@v3
         with:
-          script:  console.log("${{needs.authenticate.result}}")
+          script: |
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+            
+            async function getPullRequestHeadCommit (pr) {           
+              if (!pr)
+                throw new Error('Failed to retrieve the PR information');
+              
+              for (let i = 0; i < 30 && this.payload.pull_request.mergeable === null) {
+                console.log('Waiting for the merge commit...');
+                
+                await delay(3000);
+                
+                pr = await github.pulls.get({
+                  owner: pr.repo.owner.login,
+                  repo: pr.repo.name,
+                  pull_number: pr.number
+                });
+              }
+              
+              if (!this.payload.pull_request.mergeable)
+                throw new Error('PR cannot be merged');
+              
+              return pr.merge_commit_sha;
+            }
+            
+            async function getTargetCommit() {
+              if (context.eventName === 'push' && context.payload.head_commit)
+                return head_commit.id;
+              
+              if (context.eventName === 'pull_request_target')
+                return getPullRequestHeadCommit();
+              
+              throw new Error('Failed to detect a target commit');
+            }
+            
+            console.log(await getTargetCommit());
          
