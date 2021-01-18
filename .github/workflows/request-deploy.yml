@@ -37,7 +37,7 @@ jobs:
               if (!pr)
                 throw new Error('Failed to retrieve the PR information');
               
-              for (let i = 0; i < 30 && this.payload.pull_request.mergeable === null) {
+              for (let i = 0; i < 30 && this.payload.pull_request.mergeable === null; i++) {
                 console.log('Waiting for the merge commit...');
                 
                 await delay(3000);
