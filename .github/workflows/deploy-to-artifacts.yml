@@ -1,7 +1,12 @@
 name: Deploy To Artifacts
 
 on:
-  deployment
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'The commit ref or SHA'     
+        required: true
+        default: 'master'
   
   
 jobs:
