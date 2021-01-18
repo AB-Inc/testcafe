@@ -16,7 +16,9 @@ jobs:
 
     steps:
       - name: Check permissions
-        run: echo ${{github.event_name}} "${{toJSON(github.event)}}"
+        uses: actions/github-script@v3
+        with:
+          script:  console.log(context.event_name, context.event)
   
   request-deploy:
     runs-on: ubuntu-latest
