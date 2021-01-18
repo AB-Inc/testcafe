@@ -68,7 +68,7 @@ jobs:
             }
             
             await github.repos.createDeployment({
-              sha: await getTargetCommit(context),
+              ref: await getTargetCommit(context),
               owner: context.repo.owner,
               repo: context.repo.repo
             });
