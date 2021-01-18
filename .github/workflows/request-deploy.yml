@@ -1,8 +1,8 @@
 name: Request Deployment
 
 on:
-  push:
-    branches: [ master ]
+  #push:
+  #  branches: [ master ]
   pull_request_target:
     branches: [ master ]
 
