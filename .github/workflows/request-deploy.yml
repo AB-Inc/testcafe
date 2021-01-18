@@ -18,13 +18,13 @@ jobs:
       - name: Check permissions
         uses: actions/github-script@v3
         with:
-          script:  console.log(context.event_name, context.event)
+          script:  console.log(context.github.event_name, context.github.event)
   
   request-deploy:
     runs-on: ubuntu-latest
     environment: CI
     needs: authenticate
-    if: ${{ needs.authentication.result == 'success' || needs.authentication.result == 'skipped' }}
+    if: ${{ needs.authenticate.result == 'success' || needs.authentication.result == 'skipped' }}
     
     steps:
       - name: Request Deployment
