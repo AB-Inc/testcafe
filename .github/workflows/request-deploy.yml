@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: CI
     needs: authenticate
-    if: ${{ needs.authenticate.result == 'success' || needs.authenticate.result == 'skipped' }}
+    if: always() #${{ needs.authenticate.result == 'success' || needs.authenticate.result == 'skipped' }}
     
     steps:
       - name: Request Deployment
         uses: actions/github-script@v3
         with:
-          script:  console.log("OK")
+          script:  console.log("${{needs.authenticate.result}}")
          
