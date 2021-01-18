@@ -1,0 +1,31 @@
+name: Request Deployment
+
+on:
+  push:
+    branches: [ main ]
+  pull_request_target:
+    branches: [ main ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  authenticate:
+    runs-on:     ubuntu-latest
+    environment: authentication  
+
+    if: ${{ github.event_name == 'pull_request_target' && github.event.author_association == 'NONE' }}
+
+    steps:
+      - name: Check permissions
+        run: echo Permission check succeeded
+  
+  request-deploy:
+    runs-on: ubuntu-latest
+    environment: CI
+    needs: authenticate
+    
+    steps:
+      - name: Request Deployment
+        uses: actions/github-script@v3
+        script:  console.log(context.event_name, context.event)
+         
