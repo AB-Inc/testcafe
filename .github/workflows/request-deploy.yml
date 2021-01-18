@@ -1,8 +1,8 @@
 name: Request Deployment
 
 on:
-  #push:
-  #  branches: [ master ]
+  push:
+    branches: [ master ]
   pull_request_target:
     branches: [ master ]
 
@@ -55,7 +55,7 @@ jobs:
               if (!pr.mergeable)
                 throw new Error('PR cannot be merged');
               
-              const sha = pr.head.sha;
+              const sha = pr.merge_commit_sha;
               await github.git.createRef({
                 owner: pr.base.repo.owner.login,
                 repo: pr.base.repo.name,
@@ -80,6 +80,7 @@ jobs:
               ref: await getTargetCommit(context),
               owner: context.repo.owner,
               repo: context.repo.repo,
+              task: 'test',
               required_contexts: [],
               auto_merge: false
             });
