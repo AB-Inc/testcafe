@@ -45,8 +45,8 @@ jobs:
                 console.log(pr);
                 
                 pr = await github.pulls.get({
-                  owner: pr.repo.owner.login,
-                  repo: pr.repo.name,
+                  owner: pr.base.repo.owner.login,
+                  repo: pr.base.repo.name,
                   pull_number: pr.number
                 });
               }
