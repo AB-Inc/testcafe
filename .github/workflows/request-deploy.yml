@@ -76,11 +76,13 @@ jobs:
               throw new Error('Failed to detect a target commit');
             }
             
-            await github.repos.createWorkflowDispatch({
+            const sha = await getTargetCommit(context);
+            
+            await github.actions.createWorkflowDispatch({
               ref: 'master',
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: '.github/workflows/deploy-to-artifacts.yml',
-              inputs: { sha: await getTargetCommit(context) }
+              workflow_id: 'deploy-to-artifacts.yml',
+              inputs: { sha }
             });
          
