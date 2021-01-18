@@ -1,8 +1,8 @@
 name: Request Deployment
 
 on:
-  #push:
-  #  branches: [ master ]
+  push:
+    branches: [ master ]
   pull_request_target:
     branches: [ master ]
 
@@ -56,14 +56,14 @@ jobs:
                 throw new Error('PR cannot be merged');
               
               const sha = pr.head.sha;
-              await github.git.createRef({
-                owner: pr.base.repo.owner.login,
-                repo: pr.base.repo.name,
-                sha,
-                ref: `refs/tags/pr-${pr.number}`,
-                force: true
-              });
-              return `refs/tags/pr-${pr.number}`;
+              #await github.git.createRef({
+              #  owner: pr.base.repo.owner.login,
+              #  repo: pr.base.repo.name,
+              #  sha,
+              #  ref: `refs/tags/pr-${pr.number}`,
+              #  force: true
+              #});
+              return sha;
             }
             
             async function getTargetCommit(context) {
@@ -76,12 +76,11 @@ jobs:
               throw new Error('Failed to detect a target commit');
             }
             
-            await github.repos.createDeployment({
-              ref: await getTargetCommit(context),
+            await github.repos.createWorkflowDispatch({
+              ref: 'master',
               owner: context.repo.owner,
               repo: context.repo.repo,
-              task: 'test',
-              required_contexts: [],
-              auto_merge: false
+              workflow_id: 'deploy-to-artifacts.yml',
+              inputs: { sha: await getTargetCommit(context) }
             });
          
