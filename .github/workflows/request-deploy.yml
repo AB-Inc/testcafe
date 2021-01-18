@@ -63,12 +63,12 @@ jobs:
               //  ref: `refs/tags/pr-${pr.number}`,
               //  force: true
               //});
-              return sha;
+              return { sha, ref: 'refs/pull/${pr.number}/head' };
             }
             
             async function getTargetCommit(context) {
               if (context.eventName === 'push' && context.payload.head_commit)
-                return context.payload.head_commit.id;
+                return { sha: context.payload.head_commit.id, ref: 'refs/heads/master' };
               
               if (context.eventName === 'pull_request_target')
                 return getPullRequestHeadCommit(context.payload.pull_request);
@@ -76,10 +76,10 @@ jobs:
               throw new Error('Failed to detect a target commit');
             }
             
-            const sha = await getTargetCommit(context);
+            const { sha, ref } = await getTargetCommit(context);
             
             await github.actions.createWorkflowDispatch({
-              ref: sha,
+              ref,
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'deploy-to-artifacts.yml',
