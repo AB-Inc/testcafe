@@ -49,8 +49,6 @@ jobs:
                     pull_number: pr.number
                   })
                 );
-                
-                console.log(pr);
               }
               
               if (!pr.mergeable)
@@ -69,5 +67,9 @@ jobs:
               throw new Error('Failed to detect a target commit');
             }
             
-            console.log(await getTargetCommit(context));
+            await github.repos.createDeployment({
+              sha: await getTargetCommit(context),
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
          
