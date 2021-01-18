@@ -56,7 +56,7 @@ jobs:
                 throw new Error('PR cannot be merged');
               
               const sha = pr.head.sha;
-              await github.git.updateRef({
+              await github.git.createRef({
                 owner: pr.base.repo.owner.login,
                 repo: pr.base.repo.name,
                 sha,
