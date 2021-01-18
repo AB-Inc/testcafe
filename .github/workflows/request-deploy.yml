@@ -55,7 +55,12 @@ jobs:
               if (!pr.mergeable)
                 throw new Error('PR cannot be merged');
               
-              return pr.head.sha;
+              const sha = pr.merge_commit_sha;
+              await github.git.createRef({
+                owner: pr.base.repo.owner.login,
+                repo: pr.base.repo.name,
+                sha,
+                ref: `refs/tags/pr-${pr.number}`
             }
             
             async function getTargetCommit(context) {
