@@ -79,7 +79,7 @@ jobs:
             const sha = await getTargetCommit(context);
             
             await github.actions.createWorkflowDispatch({
-              ref: 'master',
+              ref: sha,
               owner: context.repo.owner,
               repo: context.repo.repo,
               workflow_id: 'deploy-to-artifacts.yml',
