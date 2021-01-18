@@ -55,7 +55,7 @@ jobs:
               if (!pr.mergeable)
                 throw new Error('PR cannot be merged');
               
-              return pr.merge_commit_sha;
+              return pr.head.sha;
             }
             
             async function getTargetCommit(context) {
