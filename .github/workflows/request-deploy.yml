@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Check permissions
-        run: echo ${{github.event_name}} ${{toJSON(github.event)}}
+        run: echo ${{github.event_name}} "${{toJSON(github.event)}}"
   
   request-deploy:
     runs-on: ubuntu-latest
