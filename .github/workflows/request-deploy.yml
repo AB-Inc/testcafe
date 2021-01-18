@@ -80,7 +80,7 @@ jobs:
               ref: 'master',
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'deploy-to-artifacts.yml',
+              workflow_id: '.github/workflows/deploy-to-artifacts.yml',
               inputs: { sha: await getTargetCommit(context) }
             });
          
