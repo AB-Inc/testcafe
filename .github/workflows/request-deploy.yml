@@ -27,5 +27,6 @@ jobs:
     steps:
       - name: Request Deployment
         uses: actions/github-script@v3
-        script:  console.log(context.event_name, context.event)
+        with:
+          script:  console.log(context.event_name, context.event)
          
