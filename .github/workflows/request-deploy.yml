@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Check permissions
-        run: echo ${{github.event_name}} ${{github.event.author_association}}
+        run: echo ${{github.event_name}} ${{github.event}}
   
   request-deploy:
     runs-on: ubuntu-latest
