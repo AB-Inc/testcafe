@@ -12,11 +12,11 @@ jobs:
   authenticate:
     runs-on:     ubuntu-latest
     environment: authentication  
-    if: ${{ github.event_name == 'pull_request_target' && github.event.author_association == 'NONE' }}
+    #if: ${{ github.event_name == 'pull_request_target' && github.event.author_association == 'NONE' }}
 
     steps:
       - name: Check permissions
-        run: echo Permission check succeeded
+        run: echo ${{github.event_name}} ${{github.event.author_association}}
   
   request-deploy:
     runs-on: ubuntu-latest
