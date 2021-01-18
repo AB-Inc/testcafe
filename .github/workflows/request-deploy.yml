@@ -61,6 +61,8 @@ jobs:
                 repo: pr.base.repo.name,
                 sha,
                 ref: `refs/tags/pr-${pr.number}`
+              });
+              return sha;
             }
             
             async function getTargetCommit(context) {
