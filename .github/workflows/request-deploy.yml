@@ -55,15 +55,15 @@ jobs:
               return pr.merge_commit_sha;
             }
             
-            async function getTargetCommit() {
+            async function getTargetCommit(context) {
               if (context.eventName === 'push' && context.payload.head_commit)
-                return head_commit.id;
+                return context.payload.head_commit.id;
               
               if (context.eventName === 'pull_request_target')
-                return getPullRequestHeadCommit();
+                return getPullRequestHeadCommit(context.payload.pull_request);
               
               throw new Error('Failed to detect a target commit');
             }
             
-            console.log(await getTargetCommit());
+            console.log(await getTargetCommit(context));
          
