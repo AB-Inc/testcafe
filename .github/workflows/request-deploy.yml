@@ -12,7 +12,7 @@ jobs:
   authenticate:
     runs-on:     ubuntu-latest
     environment: authentication  
-    #if: ${{ github.event_name == 'pull_request_target' && github.event.author_association == 'NONE' }}
+    if: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.author_association == 'NONE' }}
 
     steps:
       - name: Check permissions
@@ -24,11 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     environment: CI
     needs: authenticate
-    #if: ${{ needs.authenticate.result == 'success' || needs.authentication.result == 'skipped' }}
+    if: ${{ needs.authenticate.result == 'success' || needs.authenticate.result == 'skipped' }}
     
     steps:
       - name: Request Deployment
         uses: actions/github-script@v3
         with:
-          script:  console.log()
+          script:  console.log("OK")
          
