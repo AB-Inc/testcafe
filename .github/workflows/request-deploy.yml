@@ -60,10 +60,10 @@ jobs:
                 owner: pr.base.repo.owner.login,
                 repo: pr.base.repo.name,
                 sha,
-                ref: `refs/heads/pr-${pr.number}`,
+                ref: `refs/tags/pr-${pr.number}`,
                 force: true
               });
-              return sha;
+              return `refs/tags/pr-${pr.number}`;
             }
             
             async function getTargetCommit(context) {
