@@ -42,6 +42,8 @@ jobs:
                 
                 await delay(3000);
                 
+                console.log(pr);
+                
                 pr = await github.pulls.get({
                   owner: pr.repo.owner.login,
                   repo: pr.repo.name,
@@ -49,7 +51,7 @@ jobs:
                 });
               }
               
-              if (!this.payload.pull_request.mergeable)
+              if (!pr.mergeable)
                 throw new Error('PR cannot be merged');
               
               return pr.merge_commit_sha;
