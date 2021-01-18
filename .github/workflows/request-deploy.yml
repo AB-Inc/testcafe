@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: CI
     needs: authenticate
-    if: always() #${{ needs.authenticate.result == 'success' || needs.authenticate.result == 'skipped' }}
+    if: always() && (needs.authenticate.result == 'success' || needs.authenticate.result == 'skipped')
     
     steps:
       - name: Request Deployment
