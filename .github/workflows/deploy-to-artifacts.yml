@@ -1,0 +1,13 @@
+name: Deploy To Artifacts
+
+on:
+  deployment
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v3
+        with:
+          script: console.log(context.payload);
+  
