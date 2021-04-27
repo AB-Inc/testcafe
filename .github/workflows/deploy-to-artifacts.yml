@@ -46,7 +46,7 @@ jobs:
             core.setOutput('sha', context.payload.inputs.merged_sha || context.payload.inputs.sha);
       - uses: actions/checkout@v2
         with:
-          ref: ${{steps.prep.outputs.sha}}
+          ref: ${{github.event.inputs.merged_sha || github.event.inputs.sha}}
       - run: |
           npm i
           npx gulp build
