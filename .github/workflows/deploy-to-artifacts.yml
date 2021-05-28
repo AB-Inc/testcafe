@@ -38,6 +38,11 @@ jobs:
     outputs:
       sha: ${{steps.prep.outputs.sha}} 
     steps:
+      - name: Build Info
+        run: |
+          echo "SHA: ${{ github.event.inputs.sha }}"
+          echo "Merged SHA: ${{ github.event.inputs.nerged_sha }}"
+          echo "Deployment run ID: ${{ github.run_id }}"
       - id: prep
         uses: actions/github-script@v3
         with:
