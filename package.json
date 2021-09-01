@@ -55,7 +55,7 @@
     "test": "gulp travis",
     "publish-please": "del-cli package-lock.json node_modules && npm i && publish-please",
     "prepublishOnly": "publish-please guard",
-    "publish-please-only": "publish-please --dry-run"
+    "publish-please-only": "publish-please"
   },
   "dependencies": {
     "@babel/core": "^7.12.1",
